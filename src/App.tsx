@@ -27,11 +27,23 @@ function App() {
         console.log(filter)
     }
 
+    let tasksForRender;
+    switch (filter) {
+        case "completed":
+            tasksForRender = tasks.filter(t => t.isDone === true)
+            break
+        case "active":
+            tasksForRender = tasks.filter(t => t.isDone === false)
+            break
+        default:
+            tasksForRender = tasks
+    }
+
     return (
         <div className="App">
             <TodoList
                 title={todoListTitle}
-                tasks={tasks}
+                tasks={tasksForRender}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
             />
