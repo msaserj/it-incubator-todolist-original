@@ -2,7 +2,8 @@ import React from 'react';
 
 type TodolistPropsType = {
     title: string
-    task: Array<TaskType>
+    tasks: Array<TaskType>
+    removeTask: (taskID: number) => void
 }
 
 export type TaskType = {
@@ -11,7 +12,17 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const Todolist = (props: TodolistPropsType) => {
+export const TodoList = (props: TodolistPropsType) => {
+ // map позволяет преобразовать массив элементов одного типа в масси элементов jsx
+    const tasksListItems = props.tasks.map(t => {
+        return(
+            <li key={t.id}>
+                <input type="checkbox" checked={t.isDone}/>
+                <span>{t.title}</span>
+                <button onClick={()=>{props.removeTask(t.id)}}>X</button>
+            </li>
+        )
+    })
     return (
         <div>
             <div>
@@ -21,18 +32,7 @@ export const Todolist = (props: TodolistPropsType) => {
                     <button>+</button>
                 </div>
                 <ul>
-                    <li>
-                        <input type="checkbox" checked={props.task[0].isDone}/>
-                        <span>{props.task[0].title}</span>
-                    </li>
-                    <li>
-                        <input type="checkbox" checked={props.task[1].isDone}/>
-                        <span>{props.task[1].title}</span>
-                    </li>
-                    <li>
-                        <input type="checkbox" checked={props.task[2].isDone}/>
-                        <span>{props.task[2].title}</span>
-                    </li>
+                    {tasksListItems}
                 </ul>
                 <div>
                     <button>All</button>
