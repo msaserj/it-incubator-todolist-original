@@ -18,9 +18,12 @@ export type TaskType = {
 export const TodoList = (props: TodolistPropsType) => {
     //локальный стейт
     const [title, setTitle] = useState<string>("")
-
+    // триммирование пробелов
     const onClickAddTask = () => {
-        props.addTask(title)
+        const trimmedTitle = title.trim()
+        if (trimmedTitle) {
+            props.addTask(trimmedTitle)
+        }
         setTitle("")
     }
 
