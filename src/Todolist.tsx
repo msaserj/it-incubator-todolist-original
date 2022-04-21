@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
 import {FilterValuesType} from "./App";
 
 type TodolistPropsType = {
@@ -27,6 +27,19 @@ export const TodoList = (props: TodolistPropsType) => {
         setTitle("")
     }
 
+    const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === "Enter" && onClickAddTask()
+    }
+
+    const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
+
+    const changeFilter = (filter: FilterValuesType) => {
+        return () => props.changeFilter(filter)
+    }
+
+
 
     // map позволяет преобразовать массив элементов одного типа в масси элементов jsx
     const tasksListItems = props.tasks.map(t => {
@@ -48,8 +61,8 @@ export const TodoList = (props: TodolistPropsType) => {
                 <div>
                     <input
                         value={title}
-                        onChange={(e) => setTitle(e.currentTarget.value)}
-                        onKeyPress={(e) => { if (e.key === "Enter") {onClickAddTask();} }}
+                        onChange={onChangeSetTitle}
+                        onKeyPress={onKeyPressAddTask}
                     />
                     <button onClick={onClickAddTask}>+</button>
                 </div>
@@ -57,9 +70,9 @@ export const TodoList = (props: TodolistPropsType) => {
                     {tasksListItems}
                 </ul>
                 <div>
-                    <button onClick={() => props.changeFilter("all")}>All</button>
-                    <button onClick={() => props.changeFilter("active")}>Active</button>
-                    <button onClick={() => props.changeFilter("completed")}>Completed</button>
+                    <button onClick={changeFilter("all")}>All</button>
+                    <button onClick={changeFilter("active")}>Active</button>
+                    <button onClick={changeFilter("completed")}>Completed</button>
                 </div>
             </div>
         </div>
