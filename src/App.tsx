@@ -51,6 +51,7 @@ function App() {
             <TodoList
                 title={todoListTitle}
                 tasks={tasksForRender}
+                filter={filter}
                 addTask={addTask}
                 removeTask={removeTask}
                 changeFilter={changeFilter}

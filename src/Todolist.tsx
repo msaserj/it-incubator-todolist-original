@@ -4,6 +4,7 @@ import {FilterValuesType} from "./App";
 type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
+    filter: FilterValuesType
     addTask: (title: string) => void
     removeTask: (taskID: string) => void
     changeFilter: (filter: FilterValuesType) => void
@@ -39,6 +40,10 @@ export const TodoList = (props: TodolistPropsType) => {
         return () => props.changeFilter(filter)
     }
 
+    const allBtnClasses = props.filter === "all" ? "active-filter" : ""
+    const activeBtnClasses = props.filter === "active" ? "active-filter" : ""
+    const completedBtnClasses = props.filter === "completed" ? "active-filter" : ""
+
 
 
     // map позволяет преобразовать массив элементов одного типа в масси элементов jsx
@@ -70,9 +75,18 @@ export const TodoList = (props: TodolistPropsType) => {
                     {tasksListItems}
                 </ul>
                 <div>
-                    <button onClick={changeFilter("all")}>All</button>
-                    <button onClick={changeFilter("active")}>Active</button>
-                    <button onClick={changeFilter("completed")}>Completed</button>
+                    <button
+                        className={allBtnClasses}
+                        onClick={changeFilter("all")}>All
+                    </button>
+                    <button
+                        className={activeBtnClasses}
+                        onClick={changeFilter("active")}>Active
+                    </button>
+                    <button
+                        className={completedBtnClasses}
+                        onClick={changeFilter("completed")}>Completed
+                    </button>
                 </div>
             </div>
         </div>

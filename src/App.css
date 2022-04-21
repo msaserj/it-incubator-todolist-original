@@ -7,6 +7,9 @@
     margin-right: 50px;
 }
 
+.active-filter {
+    background-color: #a9ff9c;
+}
 
 
 /*.App {*/
