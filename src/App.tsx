@@ -27,6 +27,9 @@ function App() {
         }
         setTasks([newTask, ...tasks])
     }
+    const changeTaskStatus = (taskID: string, isDone: boolean) => {
+      setTasks(tasks.map(t => t.id === taskID ? {...t, isDone: isDone} : t))
+    }
 
     // новый стейт для трех кнопок
     const [filter, setFilter] = useState<FilterValuesType>("all")
@@ -45,6 +48,7 @@ function App() {
                 addTask={addTask}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                changeTaskStatus={changeTaskStatus}
             />
         </div>
     );
