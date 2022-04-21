@@ -19,10 +19,8 @@ export type TaskType = {
 
 export const TodoList = (props: TodolistPropsType) => {
     const [error, setError] = useState<boolean>(false)
-
     //локальный стейт
     const [title, setTitle] = useState<string>("")
-
     // триммирование пробелов
     const onClickAddTask = () => {
         const trimmedTitle = title.trim()
@@ -33,20 +31,16 @@ export const TodoList = (props: TodolistPropsType) => {
         }
         setTitle("")
     }
-
     const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
         e.key === "Enter" && onClickAddTask()
     }
     const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
-        if(error)setError(false)
+        if (error) setError(false)
     }
     const changeFilter = (filter: FilterValuesType) => {
         return () => props.changeFilter(filter)
     }
-
-
-
     const getTasksForRender = (tasks: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {
         let tasksForRender;
         switch (filter) {
@@ -61,9 +55,7 @@ export const TodoList = (props: TodolistPropsType) => {
         }
         return tasksForRender
     }
-
     const tasksForRender: Array<TaskType> = getTasksForRender(props.tasks, props.filter)
-
     // map позволяет преобразовать массив элементов одного типа в масси элементов jsx
     const tasksListItems = tasksForRender.length
         ? tasksForRender.map(t => {
