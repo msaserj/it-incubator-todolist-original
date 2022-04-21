@@ -19,14 +19,22 @@ export const TodoList = (props: TodolistPropsType) => {
     //локальный стейт
     const [title, setTitle] = useState<string>("")
 
+    const onClickAddTask = () => {
+        props.addTask(title)
+        setTitle("")
+    }
 
- // map позволяет преобразовать массив элементов одного типа в масси элементов jsx
+
+    // map позволяет преобразовать массив элементов одного типа в масси элементов jsx
     const tasksListItems = props.tasks.map(t => {
-        return(
+        return (
             <li key={t.id}>
                 <input type="checkbox" checked={t.isDone}/>
                 <span>{t.title}</span>
-                <button onClick={()=>{props.removeTask(t.id)}}>X</button>
+                <button onClick={() => {
+                    props.removeTask(t.id)
+                }}>X
+                </button>
             </li>
         )
     })
@@ -36,10 +44,11 @@ export const TodoList = (props: TodolistPropsType) => {
                 <h3>{props.title}</h3>
                 <div>
                     <input
-                    onChange={(e)=> setTitle(e.currentTarget.value)}
-                    //
+                        value={title}
+                        onChange={(e) => setTitle(e.currentTarget.value)}
+                        onKeyPress={(e) => { if (e.key === "Enter") {onClickAddTask();} }}
                     />
-                    <button onClick={() => props.addTask(title)}>+</button>
+                    <button onClick={onClickAddTask}>+</button>
                 </div>
                 <ul>
                     {tasksListItems}
