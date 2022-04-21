@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FilterValuesType} from "./App";
 
 type TodolistPropsType = {
@@ -16,6 +16,10 @@ export type TaskType = {
 }
 
 export const TodoList = (props: TodolistPropsType) => {
+    //локальный стейт
+    const [title, setTitle] = useState<string>("")
+
+
  // map позволяет преобразовать массив элементов одного типа в масси элементов jsx
     const tasksListItems = props.tasks.map(t => {
         return(
@@ -31,8 +35,11 @@ export const TodoList = (props: TodolistPropsType) => {
             <div>
                 <h3>{props.title}</h3>
                 <div>
-                    <input type="text"/>
-                    <button onClick={() => props.addTask("supertask")}>+</button>
+                    <input
+                    onChange={(e)=> setTitle(e.currentTarget.value)}
+                    //
+                    />
+                    <button onClick={() => props.addTask(title)}>+</button>
                 </div>
                 <ul>
                     {tasksListItems}
