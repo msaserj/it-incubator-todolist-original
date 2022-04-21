@@ -4,12 +4,13 @@ import {FilterValuesType} from "./App";
 type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskID: number) => void
+    addTask: (title: string) => void
+    removeTask: (taskID: string) => void
     changeFilter: (filter: FilterValuesType) => void
 }
 
 export type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -31,7 +32,7 @@ export const TodoList = (props: TodolistPropsType) => {
                 <h3>{props.title}</h3>
                 <div>
                     <input type="text"/>
-                    <button>+</button>
+                    <button onClick={() => props.addTask("supertask")}>+</button>
                 </div>
                 <ul>
                     {tasksListItems}
