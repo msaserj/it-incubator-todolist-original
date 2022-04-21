@@ -11,6 +11,9 @@
     background-color: #a9ff9c;
 }
 
+.is-done {
+    opacity: 0.5;
+}
 
 /*.App {*/
 /*  text-align: center;*/
