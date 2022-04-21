@@ -18,6 +18,8 @@ export type TaskType = {
 }
 
 export const TodoList = (props: TodolistPropsType) => {
+    const [error, setError] = useState<boolean>(false)
+
     //локальный стейт
     const [title, setTitle] = useState<string>("")
 
@@ -26,6 +28,8 @@ export const TodoList = (props: TodolistPropsType) => {
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
             props.addTask(trimmedTitle)
+        } else {
+            setError(true)
         }
         setTitle("")
     }
@@ -35,6 +39,7 @@ export const TodoList = (props: TodolistPropsType) => {
     }
     const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
+        if(error)setError(false)
     }
     const changeFilter = (filter: FilterValuesType) => {
         return () => props.changeFilter(filter)
@@ -63,7 +68,10 @@ export const TodoList = (props: TodolistPropsType) => {
     const tasksListItems = tasksForRender.length
         ? tasksForRender.map(t => {
             const onClickRemoveTask = () => {props.removeTask(t.id)}
-            const onChangeChangeStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(t.id, e.currentTarget.checked)
+            const onChangeChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
+                props.changeTaskStatus(t.id, e.currentTarget.checked)
+
+            }
             const taskClasses = t.isDone ? "is-done" : ""
             return (
                 <li key={t.id}>
@@ -71,6 +79,7 @@ export const TodoList = (props: TodolistPropsType) => {
                         type="checkbox"
                         checked={t.isDone}
                         onChange={onChangeChangeStatus}
+
                     />
                     <span className={taskClasses} >{t.title}</span>
                     <button onClick={onClickRemoveTask}>X</button>
@@ -81,7 +90,7 @@ export const TodoList = (props: TodolistPropsType) => {
     const allBtnClasses = props.filter === "all" ? "active-filter" : ""
     const activeBtnClasses = props.filter === "active" ? "active-filter" : ""
     const completedBtnClasses = props.filter === "completed" ? "active-filter" : ""
-
+    const inputClasses = error ? "error" : ""
 
     return (
         <div>
@@ -92,8 +101,10 @@ export const TodoList = (props: TodolistPropsType) => {
                         value={title}
                         onChange={onChangeSetTitle}
                         onKeyPress={onKeyPressAddTask}
+                        className={inputClasses}
                     />
                     <button onClick={onClickAddTask}>+</button>
+                    {error && <div className="error-message">Title is required</div>}
                 </div>
                 <ul>
                     {tasksListItems}

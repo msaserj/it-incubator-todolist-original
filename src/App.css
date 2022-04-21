@@ -15,6 +15,15 @@
     opacity: 0.5;
 }
 
+.error {
+    border: red 2px solid;
+    outline: none;
+}
+
+.error-message {
+    color: red;
+}
+
 /*.App {*/
 /*  text-align: center;*/
 /*}*/
