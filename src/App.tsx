@@ -60,6 +60,7 @@ function App() {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, filter: value} : el))
     }
     //01
+    //02
     return (
         <div className="App">
             {
