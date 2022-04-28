@@ -48,7 +48,7 @@ function App() {
     }
 
     function addTask(todolistID: string, title: string) {
-        let newTask = {id: v1(), title: "HTML&CSS", isDone: true}
+        let newTask = {id: v1(), title: title, isDone: true}
 
         setTasks({...tasks, [todolistID]:[newTask, ...tasks[todolistID]]})
 
