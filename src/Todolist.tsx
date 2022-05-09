@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
 import {Fullinput} from "./components/Fullinput";
+import {EdittableSpan} from "./components/EdittableSpan";
 
 
 type TaskType = {
@@ -10,6 +11,7 @@ type TaskType = {
 }
 
 type PropsType = {
+    id: string
     todolistID: string
     title: string
     tasks: Array<TaskType>
@@ -19,14 +21,10 @@ type PropsType = {
     changeTaskStatus: (todolistID: string, taskId: string, isDone: boolean) => void
     filter: FilterValuesType
     removeTodolist: (todolistID: string) => void
+    editTodolist: (todolistID: string, newTitle: string)=> void
 }
 
 export function Todolist(props: PropsType) {
-
-
-
-
-
 
     const onAllClickHandler = () => props.changeFilter(props.todolistID, "all");
     const onActiveClickHandler = () => props.changeFilter(props.todolistID,"active");
@@ -35,13 +33,17 @@ export function Todolist(props: PropsType) {
         props.removeTodolist(props.todolistID)
     }
     
-    const addTaskHandler = () => {
-
+    const addTaskHandler = (newTitle: string) => {
+        props.addTask(newTitle, props.id)
+    }
+    
+    const editTodolistHandler = (newTitle: string) => {
+      props.editTodolist(props.id, newTitle)
     }
 
     return <div>
         <h3>
-            {props.title}
+            <EdittableSpan  title={props.title} callBack={editTodolistHandler}/>
         <button onClick={removeTodolistHandler}>X</button>
         </h3>
         <div>

@@ -37,7 +37,11 @@ function App() {
             {id: v1(), title: "GraphQL2", isDone: false},
         ]
     });
-    
+
+
+    const editTodolist = (todolistID: string, newTitle: string) => {
+        setTodolists(todolists.map(el=>el.id===todolistID ? {...el, title:newTitle}: el))
+    }
     
     const addTodoList = (newTitle: string) => {
         let newID = v1()
@@ -86,6 +90,7 @@ function App() {
                     }
                     return (
                         <Todolist
+                            id={el.id}
                             key={el.id}
                             todolistID={el.id}
                             title={el.title}
@@ -96,6 +101,7 @@ function App() {
                             changeTaskStatus={changeStatus}
                             filter={el.filter}
                             removeTodolist={removeTodolist}
+                            editTodolist={editTodolist}
                         />
                     )
                 })
