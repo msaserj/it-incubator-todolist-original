@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
+import {Fullinput} from "./components/Fullinput";
 
 export type FilterValuesType = "all" | "active" | "completed";
 type todolistsType = {
@@ -38,15 +39,22 @@ function App() {
     });
     
     
+    const addTodoList = (newTitle: string) => {
+        let newID = v1()
+        let newTodoList: todolistsType = {id: newID, title: newTitle, filter: 'all'}
+        setTodolists([...todolists, newTodoList])
+        setTasks({...tasks, [newID]:[]})
+    }
+    
     const removeTodolist = (todolistID: string) => {
       setTodolists(todolists.filter(el=>el.id !== todolistID))
         // delete tasks from memory
         delete tasks[todolistID]
+
     }
     function removeTask(todolistID: string, taskId: string) {
        setTasks({...tasks, [todolistID]: tasks[todolistID].filter(el=>el.id !== taskId)})
     }
-
     function addTask(todolistID: string, title: string) {
         let newTask = {id: v1(), title: title, isDone: true}
         setTasks({...tasks, [todolistID]:[newTask, ...tasks[todolistID]]})
@@ -59,11 +67,10 @@ function App() {
     function changeFilter(todolistID: string, value: FilterValuesType) {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, filter: value} : el))
     }
-    //01
-    //02
-    //03
+
     return (
         <div className="App">
+            <Fullinput callBack={addTodoList}/>
             {
                 todolists.map((el) => {
                     let tasksForTodolist
