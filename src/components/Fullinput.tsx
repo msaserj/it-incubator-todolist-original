@@ -14,14 +14,15 @@ export const Fullinput = (props: FullinputPropsType) => {
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
-        if (e.charCode === 13) {
+        if (e.key === "Enter") {
             addTask();
         }
     }
 
     const addTask = () => {
-        if (title.trim() !== "") {
-            props.callBack(title.trim());
+        let newTitle = title.trim()
+        if (newTitle !== "") {
+            props.callBack(newTitle);
             setTitle("");
         } else {
             setError("Title is required");
@@ -32,7 +33,7 @@ export const Fullinput = (props: FullinputPropsType) => {
         <div>
             <input value={title}
                    onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
+                   onKeyDown={onKeyPressHandler}
                    className={error ? "error" : ""}
             />
             <button onClick={addTask}>+</button>

@@ -22,6 +22,7 @@ type PropsType = {
     filter: FilterValuesType
     removeTodolist: (todolistID: string) => void
     editTodolist: (todolistID: string, newTitle: string)=> void
+    editTask: (todolistID: string, taskId: string, newTitle: string)=> void
 }
 
 export function Todolist(props: PropsType) {
@@ -39,6 +40,9 @@ export function Todolist(props: PropsType) {
     
     const editTodolistHandler = (newTitle: string) => {
       props.editTodolist(props.id, newTitle)
+    }
+    const editTaskHandler = (tID: string, newTitle: string) => {
+      props.editTask(props.id, tID, newTitle)
     }
 
     return <div>
@@ -61,7 +65,8 @@ export function Todolist(props: PropsType) {
                         <input type="checkbox"
                                onChange={onChangeHandler}
                                checked={t.isDone}/>
-                        <span>{t.title}</span>
+                        <EdittableSpan  title={t.title} callBack={(newTitle)=>editTaskHandler(t.id, newTitle)}/>
+
                         <button onClick={onClickHandler}>x</button>
                     </li>
                 })

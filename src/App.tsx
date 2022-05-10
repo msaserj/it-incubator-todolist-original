@@ -37,6 +37,10 @@ function App() {
             {id: v1(), title: "GraphQL2", isDone: false},
         ]
     });
+    
+    const editTask = (todolistID: string, taskId: string, newTitle: string) => {
+      setTasks({...tasks, [todolistID]:tasks [todolistID].map(el=>el.id===taskId ? {...el, title: newTitle}: el)})
+    }
 
 
     const editTodolist = (todolistID: string, newTitle: string) => {
@@ -61,7 +65,9 @@ function App() {
     }
     function addTask(todolistID: string, title: string) {
         let newTask = {id: v1(), title: title, isDone: true}
-        setTasks({...tasks, [todolistID]:[newTask, ...tasks[todolistID]]})
+        let todolistTasks = tasks[todolistID]
+        tasks[todolistID] = [newTask, ...todolistTasks]
+        setTasks({...tasks})
 
     }
     function changeStatus(todolistID: string, taskId: string, isDone: boolean) {
@@ -102,6 +108,7 @@ function App() {
                             filter={el.filter}
                             removeTodolist={removeTodolist}
                             editTodolist={editTodolist}
+                            editTask={editTask}
                         />
                     )
                 })
